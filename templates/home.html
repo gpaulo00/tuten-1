@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="author" content="Gustavo Paulo">
+    <title>Tuten Labs</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <div class="container mt-5 d-flex justify-content-center">
+      <form id="hourForm" class="col-12 col-sm-9 col-md-6">
+        <div>
+          <h1>Ejercicio 2</h1>
+          <div class="form-group mt-3">
+            <label for="inputHora">Hora</label>
+            <input type="text" class="form-control" id="inputHora" aria-describedby="horaHelp" placeholder="Hora">
+            <small id="horaHelp" class="form-text text-muted">Formato: HH:MM:SS</small>
+          </div>
+          <div class="form-group">
+            <label for="inputTz">Huso horario</label>
+            <input type="text" class="form-control" id="inputTz" aria-describedby="husoHelp" placeholder="Huso horario">
+            <small id="husoHelp" class="form-text text-muted">Ejemplo: -0400</small>
+          </div>
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="mt-4">
+          <h2>Respuesta</h2>
+          <pre id="response"></pre>
+        </div>
+
+        <div class="mt-5">Gustavo Paulo. 2021</div>
+      </form>
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js" integrity="sha512-bZS47S7sPOxkjU/4Bt0zrhEtWx0y0CRkhEp8IckzK+ltifIIE9EMIMTuT/mEzoIMewUINruDBIR/jJnbguonqQ==" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(
+        $("#hourForm").on('submit', function(ev){
+          ev.preventDefault();
+          ev.stopPropagation();
+          
+          var data = {
+            hora: $("#inputHora").val(),
+            timezone: $("#inputTz").val(),
+          };
+
+          axios.post('/api/v1/hora', data).then(res => {
+            $("#response").html(JSON.stringify(res.data, null, 4));
+          }).catch(e => {
+            $("#response").html(`${e}`);
+          });
+        })
+      );
+    </script>
+  </body>
+</html>
